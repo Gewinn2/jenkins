@@ -1,7 +1,6 @@
 pipeline {
   agent any
   options {
-    ansiColor('xterm')
     disableConcurrentBuilds() // Запрет одновременных сборок
     timestamps() // Вывод времени выполнения шагов в логах
     timeout(time: 1, unit: 'HOURS') // Максимальное время выполнения пайплайна
