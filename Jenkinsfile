@@ -13,7 +13,7 @@ pipeline {
     stage('Build'){
       steps {
         echo 'Building'
-        echo '$GLOVAL_VAR'
+        echo "$GLOVAL_VAR"
       }
     }
     stage('Test'){
