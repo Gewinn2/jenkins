@@ -1,6 +1,6 @@
 pipeline {
   agent any
-  triggers { pollSCM('* * * * *') }
+  // triggers { pollSCM('* * * * *') }
   options {
     disableConcurrentBuilds() // Запрет одновременных сборок
     timestamps() // Вывод времени выполнения шагов в логах
@@ -19,7 +19,7 @@ pipeline {
     }
     stage('Test'){
       steps {
-        echo 'Testing'
+        echo 'Testing 2'
       }
     }
     stage('Deploy'){
