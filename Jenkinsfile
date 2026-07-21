@@ -1,5 +1,6 @@
 pipeline {
   agent any
+  triggers { pollSCM('* * * * *') }
   options {
     disableConcurrentBuilds() // Запрет одновременных сборок
     timestamps() // Вывод времени выполнения шагов в логах
