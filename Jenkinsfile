@@ -8,7 +8,7 @@ pipeline {
     buildDiscarder(logRotator(artifactDaysToKeepStr: '7', artifactNumToKeepStr: '10', daysToKeepStr: '7', numToKeepStr: '10')) // Сколько дней хранится артефакт, сколько артефактов хранить, сколько дней хранить логи сборок, сколько последних сборок хранить
   }
   environment {
-    IMAGE_NAME = '$CI_REGISTRY/demo-group/demo-project/hello_app:latest;
+    IMAGE_NAME = '$CI_REGISTRY/demo-group/demo-project/hello_app:latest'
   }
   stages {
     stage('Login'){
