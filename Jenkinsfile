@@ -9,7 +9,7 @@ pipeline {
   }
   environment {
     CI_REGISTRY = credentials('CI_REGISTRY')
-    IMAGE_NAME = '$CI_REGISTRY/demo-group/demo-project/hello_app:latest'
+    IMAGE_NAME = 'gl-registry.gewinn2-pet.ru/demo-group/demo-project/hello_app:latest'
   }
   stages {
     stage('Login'){
