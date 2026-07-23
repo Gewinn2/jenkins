@@ -13,7 +13,11 @@ pipeline {
   stages {
     stage('Login'){
       steps {
-        sh 'echo "$PASSWORD" | docker login -u $USER --password-stdin "$CI_REGISTRY"'
+        withCredentials([usernamePassword(credentialsId: 'GITLAB_REGISTRY', usernameVarible: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+          sh """"
+          echo "$PASSWORD" | docker login -u $USER --password-stdin "$CI_REGISTRY"
+          """"
+        }
       }
     }
     stage('Build'){
