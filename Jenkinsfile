@@ -15,6 +15,7 @@ pipeline {
       steps {
         echo 'Building'
         echo "$GLOVAL_VAR"
+        sh 'ls -la'
       }
     }
     stage('Test'){
