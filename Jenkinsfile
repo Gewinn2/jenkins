@@ -8,19 +8,18 @@ pipeline {
     buildDiscarder(logRotator(artifactDaysToKeepStr: '7', artifactNumToKeepStr: '10', daysToKeepStr: '7', numToKeepStr: '10')) // Сколько дней хранится артефакт, сколько артефактов хранить, сколько дней хранить логи сборок, сколько последних сборок хранить
   }
   environment {
-    GLOVAL_VAR = 'global variable'
+    IMAGE_NAME = '$CI_REGISTRY/demo-group/demo-project/hello_app:latest;
   }
   stages {
-    stage('Build'){
+    stage('Login'){
       steps {
-        echo 'Building'
-        echo "$GLOVAL_VAR"
-        sh 'ls -la'
+        sh 'echo "$PASSWORD" | docker login -u $USER --password-stdin "$CI_REGISTRY"'
       }
     }
-    stage('Test'){
+    stage('Build'){
       steps {
-        echo 'Testing 2'
+        sh 'docker build -t $IMAGE_NAME .'
+        sh 'docker push $IMAGE_NAME'
       }
     }
     stage('Deploy'){
