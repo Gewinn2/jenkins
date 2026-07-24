@@ -21,10 +21,24 @@ pipeline {
         }
       }
     }
+    stage('Testi'){
+      parallel {
+        stage('Linting'){
+          steps {
+            echo "Linting"
+          }
+        }
+        stage('Unit test'){
+          steps {
+            echo "Unit testing"
+          }
+        }
+      }
+    }
     stage('Build'){
       steps {
         sh 'docker build -t $IMAGE_NAME .'
-        sh 'docker push $IMAGE_NAME'
+    //        sh 'docker push $IMAGE_NAME'
       }
     }
     stage('Deploy'){
@@ -32,16 +46,16 @@ pipeline {
         echo 'Deploy 2'
       }
     }
-  }
-  post {
-    always {
-      echo 'Pipeline finished'
-    }
-    success {
-      echo 'successfully'
-    }
-    failure {
-      echo 'failed'
+    post {
+      always {
+        echo 'Pipeline finished'
+      }
+      success {
+        echo 'successfully'
+      }
+      failure {
+        echo 'failed'
+      }
     }
   }
 }
