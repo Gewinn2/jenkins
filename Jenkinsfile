@@ -1,3 +1,4 @@
+@Library('myLibrary') _
 pipeline {
   agent any
   // triggers { pollSCM('* * * * *') }
@@ -8,20 +9,12 @@ pipeline {
     buildDiscarder(logRotator(artifactDaysToKeepStr: '7', artifactNumToKeepStr: '10', daysToKeepStr: '7', numToKeepStr: '10')) // Сколько дней хранится артефакт, сколько артефактов хранить, сколько дней хранить логи сборок, сколько последних сборок хранить
   }
   environment {
+    GITLAB_ACC = credentials('GITLAB_REGISTRY')
     CI_REGISTRY = credentials('CI_REGISTRY')
     IMAGE_NAME = 'gl-registry.gewinn2-pet.ru/demo-group/demo-project/hello_app:latest'
   }
   stages {
-    stage('Login'){
-      steps {
-        withCredentials([usernamePassword(credentialsId: 'GITLAB_REGISTRY', usernameVariable: 'USER', passwordVariable: 'PASSWORD')]) {
-          sh '''
-            echo "$PASSWORD" | docker login -u $USER --password-stdin "$CI_REGISTRY"
-          '''
-        }
-      }
-    }
-    stage('Testi'){
+    stage('Test'){
       parallel {
         stage('Linting'){
           steps {
@@ -33,17 +26,15 @@ pipeline {
             echo "Unit testing"
           }
         }
-      }
-    }
-    stage('Build'){
-      steps {
-        sh 'docker build -t $IMAGE_NAME .'
-    //        sh 'docker push $IMAGE_NAME'
-      }
-    }
-    stage('Deploy'){
-      steps {
-        echo 'Deploy 2'
+        stage('Build and Deploy') {
+          steps {
+            docker_build_deploy(
+              user: $GITLAB_ACC_USR,
+              password: $GITLAB_ACC_PASW,
+              ci_registry: $CI_REGISTRY
+            )
+          }
+        }
       }
     }
   }
