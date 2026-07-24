@@ -9,7 +9,6 @@ pipeline {
     buildDiscarder(logRotator(artifactDaysToKeepStr: '7', artifactNumToKeepStr: '10', daysToKeepStr: '7', numToKeepStr: '10')) // Сколько дней хранится артефакт, сколько артефактов хранить, сколько дней хранить логи сборок, сколько последних сборок хранить
   }
   environment {
-    GITLAB_REGISTRY = credentials('GITLAB_REGISTRY')
     CI_REGISTRY = credentials('CI_REGISTRY')
     IMAGE_NAME = 'gl-registry.gewinn2-pet.ru/demo-group/demo-project/hello_app:latest'
   }
@@ -29,8 +28,9 @@ pipeline {
         stage('Build and Deploy') {
           steps {
             docker_build_deploy(
-              credentialsId: env.GITLAB_REGISTRY,
-              ci_registry: env.CI_REGISTRY
+              credentialsId: 'GITLAB_REGISTRY',
+              ci_registry: env.CI_REGISTRY,
+              image: env.IMAGE_NAME
             )
           }
         }
