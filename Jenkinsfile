@@ -46,16 +46,16 @@ pipeline {
         echo 'Deploy 2'
       }
     }
-    post {
-      always {
-        echo 'Pipeline finished'
-      }
-      success {
-        echo 'successfully'
-      }
-      failure {
-        echo 'failed'
-      }
+  }
+  post {
+    always {
+      echo 'Pipeline finished'
+    }
+    success {
+      echo 'successfully'
+    }
+    failure {
+      echo 'failed'
     }
   }
 }
