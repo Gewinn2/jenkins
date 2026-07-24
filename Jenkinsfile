@@ -26,6 +26,7 @@ pipeline {
           }
         }
       }
+    }
     stage('Build and Deploy') {
       steps {
         docker_build_deploy(
