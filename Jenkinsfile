@@ -28,7 +28,7 @@ pipeline {
         stage('Build and Deploy') {
           steps {
             docker_build_deploy(
-              ci_registry: $CI_REGISTRY
+              ci_registry: env.CI_REGISTRY
             )
           }
         }
