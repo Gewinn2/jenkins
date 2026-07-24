@@ -25,15 +25,14 @@ pipeline {
             echo "Unit testing"
           }
         }
-        stage('Build and Deploy') {
-          steps {
-            docker_build_deploy(
-              credentialsId: 'GITLAB_REGISTRY',
-              ci_registry: env.CI_REGISTRY,
-              image: env.IMAGE_NAME
-            )
-          }
-        }
+      }
+    stage('Build and Deploy') {
+      steps {
+        docker_build_deploy(
+          credentialsId: 'GITLAB_REGISTRY',
+          ci_registry: env.CI_REGISTRY,
+          image: env.IMAGE_NAME
+        )
       }
     }
   }
